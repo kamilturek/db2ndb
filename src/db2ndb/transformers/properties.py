@@ -5,6 +5,7 @@ from libcst.codemod import ContextAwareTransformer
 __all__ = (
     "ReplaceBlobProperty",
     "ReplaceBooleanProperty",
+    "ReplaceByteStringProperty",
     "ReplaceCategoryProperty",
     "ReplaceDateProperty",
     "ReplaceDateTimeProperty",
@@ -68,3 +69,31 @@ ReplaceUserProperty = ReplaceProperty("db.UserProperty", "ndb.UserProperty")
 ReplaceBlobReferenceProperty = ReplaceProperty(
     "blobstore.BlobReferenceProperty", "ndb.BlobKeyProperty"
 )
+
+
+class ReplaceByteStringProperty(ContextAwareTransformer):
+    @m.leave(
+        m.Call(
+            func=m.Attribute(
+                value=m.Name(value="db"), attr=m.Name(value="ByteStringProperty")
+            )
+        )
+    )
+    def _transform(self, original_node: cst.Call, updated_node: cst.Call) -> cst.Call:
+        return updated_node.with_changes(
+            func=cst.Attribute(
+                value=cst.Name(value="ndb"),
+                attr=cst.Name(value="BlobProperty"),
+            ),
+            args=[
+                *updated_node.args,
+                cst.Arg(
+                    value=cst.Name(value="True"),
+                    keyword=cst.Name(value="indexed"),
+                    equal=cst.AssignEqual(
+                        whitespace_after=cst.SimpleWhitespace(value=""),
+                        whitespace_before=cst.SimpleWhitespace(value=""),
+                    ),
+                ),
+            ],
+        )

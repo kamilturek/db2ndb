@@ -5,6 +5,7 @@ from db2ndb.transformers import (
     ReplaceBlobProperty,
     ReplaceBlobReferenceProperty,
     ReplaceBooleanProperty,
+    ReplaceByteStringProperty,
     ReplaceCategoryProperty,
     ReplaceDateProperty,
     ReplaceDateTimeProperty,
@@ -28,6 +29,11 @@ from db2ndb.transformers import (
     [
         (ReplaceBlobProperty, "db.BlobProperty()", "ndb.BlobProperty()"),
         (ReplaceBooleanProperty, "db.BooleanProperty()", "ndb.BooleanProperty()"),
+        (
+            ReplaceByteStringProperty,
+            "db.ByteStringProperty()",
+            "ndb.BlobProperty(indexed=True)",
+        ),
         (ReplaceCategoryProperty, "db.CategoryProperty()", "ndb.StringProperty()"),
         (ReplaceDateProperty, "db.DateProperty()", "ndb.DateProperty()"),
         (ReplaceDateTimeProperty, "db.DateTimeProperty()", "ndb.DateTimeProperty()"),
