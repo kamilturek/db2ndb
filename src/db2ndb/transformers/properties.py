@@ -18,6 +18,7 @@ __all__ = (
     "ReplacePostalAddressProperty",
     "ReplaceRatingProperty",
     "ReplaceStringProperty",
+    "RemoveMultilineKwarg",
     "ReplaceTextProperty",
     "ReplaceTimeProperty",
     "ReplaceUserProperty",
@@ -47,28 +48,6 @@ def ReplaceProperty(before: str, after: str) -> ContextAwareTransformer:
 
 ReplaceBlobProperty = ReplaceProperty("db.BlobProperty", "ndb.BlobProperty")
 ReplaceBooleanProperty = ReplaceProperty("db.BooleanProperty", "ndb.BooleanProperty")
-ReplaceCategoryProperty = ReplaceProperty("db.CategoryProperty", "ndb.StringProperty")
-ReplaceDateProperty = ReplaceProperty("db.DateProperty", "ndb.DateProperty")
-ReplaceDateTimeProperty = ReplaceProperty("db.DateTimeProperty", "ndb.DateTimeProperty")
-ReplaceEmailProperty = ReplaceProperty("db.EmailProperty", "ndb.StringProperty")
-ReplaceFloatProperty = ReplaceProperty("db.FloatProperty", "ndb.FloatProperty")
-ReplaceGeoPtProperty = ReplaceProperty("db.GeoPtProperty", "ndb.GeoPtProperty")
-ReplaceIntegerProperty = ReplaceProperty("db.IntegerProperty", "ndb.IntegerProperty")
-ReplaceLinkProperty = ReplaceProperty("db.LinkProperty", "ndb.StringProperty")
-ReplacePhoneNumberProperty = ReplaceProperty(
-    "db.PhoneNumberProperty", "ndb.StringProperty"
-)
-ReplacePostalAddressProperty = ReplaceProperty(
-    "db.PostalAddressProperty", "ndb.StringProperty"
-)
-ReplaceRatingProperty = ReplaceProperty("db.RatingProperty", "ndb.IntegerProperty")
-ReplaceStringProperty = ReplaceProperty("db.StringProperty", "ndb.StringProperty")
-ReplaceTextProperty = ReplaceProperty("db.TextProperty", "ndb.TextProperty")
-ReplaceTimeProperty = ReplaceProperty("db.TimeProperty", "ndb.TimeProperty")
-ReplaceUserProperty = ReplaceProperty("db.UserProperty", "ndb.UserProperty")
-ReplaceBlobReferenceProperty = ReplaceProperty(
-    "blobstore.BlobReferenceProperty", "ndb.BlobKeyProperty"
-)
 
 
 class ReplaceByteStringProperty(ContextAwareTransformer):
@@ -97,3 +76,37 @@ class ReplaceByteStringProperty(ContextAwareTransformer):
                 ),
             ],
         )
+
+
+ReplaceCategoryProperty = ReplaceProperty("db.CategoryProperty", "ndb.StringProperty")
+ReplaceDateProperty = ReplaceProperty("db.DateProperty", "ndb.DateProperty")
+ReplaceDateTimeProperty = ReplaceProperty("db.DateTimeProperty", "ndb.DateTimeProperty")
+ReplaceEmailProperty = ReplaceProperty("db.EmailProperty", "ndb.StringProperty")
+ReplaceFloatProperty = ReplaceProperty("db.FloatProperty", "ndb.FloatProperty")
+ReplaceGeoPtProperty = ReplaceProperty("db.GeoPtProperty", "ndb.GeoPtProperty")
+ReplaceIntegerProperty = ReplaceProperty("db.IntegerProperty", "ndb.IntegerProperty")
+ReplaceLinkProperty = ReplaceProperty("db.LinkProperty", "ndb.StringProperty")
+ReplacePhoneNumberProperty = ReplaceProperty(
+    "db.PhoneNumberProperty", "ndb.StringProperty"
+)
+ReplacePostalAddressProperty = ReplaceProperty(
+    "db.PostalAddressProperty", "ndb.StringProperty"
+)
+ReplaceRatingProperty = ReplaceProperty("db.RatingProperty", "ndb.IntegerProperty")
+ReplaceStringProperty = ReplaceProperty("db.StringProperty", "ndb.StringProperty")
+
+
+class RemoveMultilineKwarg(ContextAwareTransformer):
+    @m.leave(m.Arg(keyword=m.Name(value="multiline")))
+    def _transform(
+        self, original_node: cst.Arg, updated_node: cst.Arg
+    ) -> cst.RemovalSentinel:
+        return cst.RemoveFromParent()
+
+
+ReplaceTextProperty = ReplaceProperty("db.TextProperty", "ndb.TextProperty")
+ReplaceTimeProperty = ReplaceProperty("db.TimeProperty", "ndb.TimeProperty")
+ReplaceUserProperty = ReplaceProperty("db.UserProperty", "ndb.UserProperty")
+ReplaceBlobReferenceProperty = ReplaceProperty(
+    "blobstore.BlobReferenceProperty", "ndb.BlobKeyProperty"
+)
