@@ -6,8 +6,12 @@ as per the official [DB to NDB Client Library Migration](https://cloud.google.co
 
 ## Installation
 
+Not released yet but you can still install the development version from GitHub.
+
 ```sh
-pipx install db2ndb
+git clone git@github.com:kamilturek/db2ndb.git
+cd db2ndb
+pip install .
 ```
 
 ## Usage
