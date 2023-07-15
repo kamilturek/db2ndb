@@ -3,9 +3,7 @@ import libcst.matchers as m
 from libcst.codemod import ContextAwareTransformer
 
 
-def ReplaceProperty(
-    before: str, after: str, docstring: str = ""
-) -> ContextAwareTransformer:
+def ReplaceProperty(before: str, after: str) -> ContextAwareTransformer:
     before_value, before_attr = before.split(".")
     after_value, after_attr = after.split(".")
 
@@ -22,8 +20,7 @@ def ReplaceProperty(
                 value=cst.Name(value=after_value), attr=cst.Name(value=after_attr)
             )
 
-    if docstring:
-        ReplaceProperty.__doc__ = docstring
+    _ReplaceProperty.__doc__ = f"Replace `{before}()` with `{after}()`"
 
     return _ReplaceProperty
 
@@ -63,5 +60,9 @@ def ReplaceListProperty(arg: str, prop: str) -> ContextAwareTransformer:
                     ),
                 ),
             )
+
+    _ReplaceListProperty.__doc__ = (
+        f"Replace `db.ListProperty({arg})` with `ndb.{prop}(repeated=True)`"
+    )
 
     return _ReplaceListProperty
