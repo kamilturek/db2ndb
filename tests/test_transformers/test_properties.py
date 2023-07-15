@@ -1,5 +1,3 @@
-from collections.abc import Sequence
-
 import pytest
 
 from db2ndb.main import transform
@@ -17,6 +15,10 @@ from db2ndb.transformers import (
     ReplaceGeoPtProperty,
     ReplaceIntegerProperty,
     ReplaceLinkProperty,
+    ReplaceListPropertyBool,
+    ReplaceListPropertyDBKey,
+    ReplaceListPropertyFloat,
+    ReplaceListPropertyInt,
     ReplacePhoneNumberProperty,
     ReplacePostalAddressProperty,
     ReplaceRatingProperty,
@@ -45,6 +47,26 @@ from db2ndb.transformers import (
         ([ReplaceGeoPtProperty], "db.GeoPtProperty()", "ndb.GeoPtProperty()"),
         ([ReplaceIntegerProperty], "db.IntegerProperty()", "ndb.IntegerProperty()"),
         ([ReplaceLinkProperty], "db.LinkProperty()", "ndb.StringProperty()"),
+        (
+            [ReplaceListPropertyBool],
+            "db.ListProperty(bool)",
+            "ndb.BooleanProperty(repeated=True)",
+        ),
+        (
+            [ReplaceListPropertyFloat],
+            "db.ListProperty(float)",
+            "ndb.FloatProperty(repeated=True)",
+        ),
+        (
+            [ReplaceListPropertyInt],
+            "db.ListProperty(int)",
+            "ndb.IntegerProperty(repeated=True)",
+        ),
+        (
+            [ReplaceListPropertyDBKey],
+            "db.ListProperty(db.Key)",
+            "ndb.KeyProperty(repeated=True)",
+        ),
         (
             [ReplacePhoneNumberProperty],
             "db.PhoneNumberProperty()",
