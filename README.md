@@ -60,7 +60,6 @@ db2ndb --disable T001 app.py
 - `T024` - Replace `db.PostalAddressProperty()` with `ndb.StringProperty()`
 - `T025` - Replace `db.RatingProperty()` with `ndb.IntegerProperty()`
 
-
 ## License
 
 This project is licensed under the terms of the [MIT license](./LICENSE).
