@@ -2,7 +2,9 @@ from dataclasses import dataclass
 from typing import Optional
 
 from db2ndb.transformers import (
+    RemoveMultilineKwarg,
     ReplaceBlobProperty,
+    ReplaceBlobReferenceProperty,
     ReplaceBooleanProperty,
     ReplaceByteStringProperty,
     ReplaceCategoryProperty,
@@ -28,6 +30,11 @@ from db2ndb.transformers import (
     ReplacePropertiesCall,
     ReplaceRatingProperty,
     ReplaceReferenceProperty,
+    ReplaceSelfReferenceProperty,
+    ReplaceStringProperty,
+    ReplaceTextProperty,
+    ReplaceTimeProperty,
+    ReplaceUserProperty,
 )
 from db2ndb.typing import TransformerType
 
@@ -173,5 +180,45 @@ TRANSFORMATIONS = (
         code="T026",
         description=ReplaceReferenceProperty.__doc__,
         transformer=ReplaceReferenceProperty,
+    ),
+    Transformation(
+        code="T027",
+        description=ReplaceSelfReferenceProperty.__doc__,
+        transformer=ReplaceSelfReferenceProperty,
+    ),
+    Transformation(
+        code="T028",
+        description=ReplaceStringProperty.__doc__,
+        transformer=ReplaceStringProperty,
+    ),
+    Transformation(
+        code="T029",
+        description=RemoveMultilineKwarg.__doc__,
+        transformer=RemoveMultilineKwarg,
+    ),
+    # Transformation(
+    #     code="T030",
+    #     description=ReplaceStringListProperty.__doc__,
+    #     transformer=ReplaceStringListProperty,
+    # ),
+    Transformation(
+        code="T031",
+        description=ReplaceTextProperty.__doc__,
+        transformer=ReplaceTextProperty,
+    ),
+    Transformation(
+        code="T032",
+        description=ReplaceTimeProperty.__doc__,
+        transformer=ReplaceTimeProperty,
+    ),
+    Transformation(
+        code="T033",
+        description=ReplaceUserProperty.__doc__,
+        transformer=ReplaceUserProperty,
+    ),
+    Transformation(
+        code="T034",
+        description=ReplaceBlobReferenceProperty.__doc__,
+        transformer=ReplaceBlobReferenceProperty,
     ),
 )

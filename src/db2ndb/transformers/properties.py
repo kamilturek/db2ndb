@@ -1,3 +1,5 @@
+from typing import Optional
+
 import libcst as cst
 import libcst.matchers as m
 from libcst.codemod import ContextAwareTransformer
@@ -24,6 +26,7 @@ __all__ = (
     "ReplacePostalAddressProperty",
     "ReplaceRatingProperty",
     "ReplaceReferenceProperty",
+    "ReplaceSelfReferenceProperty",
     "ReplaceStringProperty",
     "RemoveMultilineKwarg",
     "ReplaceTextProperty",
@@ -144,4 +147,46 @@ class ReplaceReferenceProperty(ContextAwareTransformer):
                 attr=cst.Name(value="KeyProperty"),
             ),
             args=updated_args,
+        )
+
+
+class ReplaceSelfReferenceProperty(ContextAwareTransformer):
+    """Replace `db.SelfReferenceProperty()` with `ndb.KeyProperty(kind='ThisModelClass')`"""
+
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
+        self._latest_class_name: Optional[cst.Name] = None
+
+    def visit_ClassDef(self, node: cst.ClassDef) -> Optional[bool]:
+        self._latest_class_name = node.name
+        return True
+
+    @m.call_if_inside(m.ClassDef())
+    @m.leave(
+        m.Call(
+            func=m.Attribute(
+                value=m.Name(value="db"),
+                attr=m.Name(value="SelfReferenceProperty"),
+            )
+        )
+    )
+    def _transform(self, original_node: cst.Call, updated_node: cst.Call) -> cst.Call:
+        assert self._latest_class_name is not None
+
+        return updated_node.with_changes(
+            func=cst.Attribute(
+                value=cst.Name(value="ndb"),
+                attr=cst.Name(value="KeyProperty"),
+            ),
+            args=[
+                *updated_node.args,
+                cst.Arg(
+                    value=cst.SimpleString(value=f"'{self._latest_class_name.value}'"),
+                    keyword=cst.Name(value="kind"),
+                    equal=cst.AssignEqual(
+                        whitespace_after=cst.SimpleWhitespace(value=""),
+                        whitespace_before=cst.SimpleWhitespace(value=""),
+                    ),
+                ),
+            ],
         )

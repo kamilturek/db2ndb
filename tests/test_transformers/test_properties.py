@@ -22,11 +22,12 @@ from db2ndb.transformers import (
     ReplacePhoneNumberProperty,
     ReplacePostalAddressProperty,
     ReplaceRatingProperty,
+    ReplaceReferenceProperty,
+    ReplaceSelfReferenceProperty,
     ReplaceStringProperty,
     ReplaceTextProperty,
     ReplaceTimeProperty,
     ReplaceUserProperty,
-    ReplaceReferenceProperty,
 )
 
 
@@ -83,6 +84,11 @@ from db2ndb.transformers import (
             [ReplaceReferenceProperty],
             "db.ReferenceProperty(AnotherModel)",
             "ndb.KeyProperty(kind=AnotherModel)",
+        ),
+        (
+            [ReplaceSelfReferenceProperty],
+            "class ThisModelClass: db.SelfReferenceProperty()",
+            "class ThisModelClass: ndb.KeyProperty(kind='ThisModelClass')",
         ),
         ([ReplaceStringProperty], "db.StringProperty()", "ndb.StringProperty()"),
         (

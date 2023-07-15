@@ -3,7 +3,9 @@ import libcst.matchers as m
 from libcst.codemod import ContextAwareTransformer
 
 
-def ReplaceProperty(before: str, after: str) -> ContextAwareTransformer:
+def ReplaceProperty(
+    before: str, after: str, docstring: str = ""
+) -> ContextAwareTransformer:
     before_value, before_attr = before.split(".")
     after_value, after_attr = after.split(".")
 
@@ -19,6 +21,9 @@ def ReplaceProperty(before: str, after: str) -> ContextAwareTransformer:
             return updated_node.with_changes(
                 value=cst.Name(value=after_value), attr=cst.Name(value=after_attr)
             )
+
+    if docstring:
+        ReplaceProperty.__doc__ = docstring
 
     return _ReplaceProperty
 
