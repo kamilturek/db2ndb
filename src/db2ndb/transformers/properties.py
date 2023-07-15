@@ -98,7 +98,7 @@ class ReplaceByteStringProperty(ContextAwareTransformer):
 
 
 class ReplaceReferenceProperty(ContextAwareTransformer):
-    """Replace db.ReferenceProperty(AnotherModel) with `db.KeyProperty(kind=AnotherModel)`"""
+    """Replace `db.ReferenceProperty(AnotherModel)` with `db.KeyProperty(kind=AnotherModel)`"""
 
     @m.leave(
         m.Call(

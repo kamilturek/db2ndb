@@ -63,7 +63,7 @@ db2ndb --disable T001 app.py
 - `T023` - Replace `db.PhoneNumberProperty()` with `ndb.StringProperty()`
 - `T024` - Replace `db.PostalAddressProperty()` with `ndb.StringProperty()`
 - `T025` - Replace `db.RatingProperty()` with `ndb.IntegerProperty()`
-- `T026` - Replace db.ReferenceProperty(AnotherModel) with `db.KeyProperty(kind=AnotherModel)`
+- `T026` - Replace `db.ReferenceProperty(AnotherModel)` with `db.KeyProperty(kind=AnotherModel)`
 - `T027` - Replace `db.SelfReferenceProperty()` with `ndb.KeyProperty(kind='ThisModelClass')`
 - `T028` - Replace `db.StringProperty()` with `ndb.StringProperty()`
 - `T029` - Remove `multiline` keyword argument from db.StringProperty()
