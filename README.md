@@ -6,8 +6,12 @@ as per the official [DB to NDB Client Library Migration](https://cloud.google.co
 
 ## Installation
 
+Not released yet but you can still install the development version from GitHub.
+
 ```sh
-pipx install db2ndb
+git clone git@github.com:kamilturek/db2ndb.git
+cd db2ndb
+pip install .
 ```
 
 ## Usage
@@ -42,6 +46,32 @@ db2ndb --disable T001 app.py
 - `T006` - Replace `key_name` keyword argument with `id`
 - `T007` - Replace `key` method call with `key` attribute
 - `T008` - Replace `db.BlobProperty()` with `ndb.BlobProperty()`
+- `T009` - Replace `db.BooleanProperty()` with `ndb.BooleanProperty()`
+- `T010` - Replace `db.ByteStringProperty()` with `ndb.BlobProperty(indexed=True)`
+- `T011` - Replace `db.CategoryProperty()` with `ndb.StringProperty()`
+- `T012` - Replace `db.DateProperty()` with `ndb.DateProperty()`
+- `T013` - Replace `db.DateTimeProperty()` with `ndb.DateTimeProperty()`
+- `T014` - Replace `db.EmailProperty()` with `ndb.StringProperty()`
+- `T015` - Replace `db.FloatProperty()` with `ndb.FloatProperty()`
+- `T016` - Replace `db.GeoPtProperty()` with `ndb.GeoPtProperty()`
+- `T017` - Replace `db.IntegerProperty()` with `ndb.IntegerProperty()`
+- `T018` - Replace `db.LinkProperty()` with `ndb.StringProperty()`
+- `T019` - Replace `db.ListProperty(bool)` with `ndb.BooleanProperty(repeated=True)`
+- `T020` - Replace `db.ListProperty(float)` with `ndb.FloatProperty(repeated=True)`
+- `T021` - Replace `db.ListProperty(int)` with `ndb.IntegerProperty(repeated=True)`
+- `T022` - Replace `db.ListProperty(db.Key)` with `ndb.KeyProperty(repeated=True)`
+- `T023` - Replace `db.PhoneNumberProperty()` with `ndb.StringProperty()`
+- `T024` - Replace `db.PostalAddressProperty()` with `ndb.StringProperty()`
+- `T025` - Replace `db.RatingProperty()` with `ndb.IntegerProperty()`
+- `T026` - Replace `db.ReferenceProperty(AnotherModel)` with `db.KeyProperty(kind=AnotherModel)`
+- `T027` - Replace `db.SelfReferenceProperty()` with `ndb.KeyProperty(kind='ThisModelClass')`
+- `T028` - Replace `db.StringProperty()` with `ndb.StringProperty()`
+- `T029` - Remove `multiline` keyword argument from db.StringProperty()
+- `T030` - Replace `db.StringListProperty()` with `ndb.StringProperty(repeated=True)`
+- `T031` - Replace `db.TextProperty()` with `ndb.TextProperty()`
+- `T032` - Replace `db.TimeProperty()` with `ndb.TimeProperty()`
+- `T033` - Replace `db.UserProperty()` with `ndb.UserProperty()`
+- `T034` - Replace `blobstore.BlobReferenceProperty()` with `ndb.BlobKeyProperty()`
 
 ## License
 

@@ -12,6 +12,8 @@ __all__ = (
 
 
 class ReplaceDBModelBase(ContextAwareTransformer):
+    """Replace `db.Model` base class with `ndb.Model`"""
+
     @m.call_if_inside(
         m.ClassDef(
             bases=[
@@ -34,6 +36,8 @@ class ReplaceDBModelBase(ContextAwareTransformer):
 
 
 class ReplaceKindDef(ContextAwareTransformer):
+    """Replace `kind` method definition with `_get_kind`"""
+
     @m.leave(m.FunctionDef(name=m.Name(value="kind")))
     def _transform(
         self, original_node: cst.FunctionDef, updated_node: cst.FunctionDef
@@ -42,6 +46,8 @@ class ReplaceKindDef(ContextAwareTransformer):
 
 
 class ReplaceKindCall(ContextAwareTransformer):
+    """Replace `kind` method call with `_get_kind`"""
+
     @m.call_if_inside(m.Call(func=m.Attribute(attr=m.Name(value="kind"))))
     @m.leave(m.Attribute(attr=m.Name(value="kind")))
     def _transform(
@@ -51,6 +57,8 @@ class ReplaceKindCall(ContextAwareTransformer):
 
 
 class ReplacePropertiesCall(ContextAwareTransformer):
+    """Replace `properties` method call with `_properties` attribute"""
+
     @m.leave(m.Call(func=m.Attribute(attr=m.Name(value="properties"))))
     def _transform(self, original_node: cst.Call, updated_node: cst.Call) -> cst.Call:
         return cst.Attribute(
@@ -59,6 +67,8 @@ class ReplacePropertiesCall(ContextAwareTransformer):
 
 
 class ReplaceDynamicPropertiesCall(ContextAwareTransformer):
+    """Replace `dynamic_properties` method call with `_properties` attribute"""
+
     @m.leave(m.Call(func=m.Attribute(attr=m.Name(value="dynamic_properties"))))
     def _transform(self, original_node: cst.Call, updated_node: cst.Call) -> cst.Call:
         return cst.Attribute(
