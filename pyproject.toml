@@ -41,4 +41,5 @@ pythonpath = "src"
 
 [tool.ruff.extend-per-file-ignores]
 "__init__.py" = ["F403"]
+"properties.py" = ["E501"]
 "transformations.py" = ["E501"]

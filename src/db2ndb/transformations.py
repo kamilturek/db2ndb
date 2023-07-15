@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import Optional
 
 from db2ndb.transformers import (
     ReplaceBlobProperty,
@@ -26,6 +27,7 @@ from db2ndb.transformers import (
     ReplacePostalAddressProperty,
     ReplacePropertiesCall,
     ReplaceRatingProperty,
+    ReplaceReferenceProperty,
 )
 from db2ndb.typing import TransformerType
 
@@ -35,7 +37,7 @@ __all__ = ("TRANSFORMATIONS",)
 @dataclass
 class Transformation:
     code: str
-    description: str
+    description: Optional[str]
     transformer: TransformerType
 
 
@@ -166,5 +168,10 @@ TRANSFORMATIONS = (
         code="T025",
         description="Replace `db.RatingProperty()` with `ndb.IntegerProperty()`",
         transformer=ReplaceRatingProperty,
+    ),
+    Transformation(
+        code="T026",
+        description=ReplaceReferenceProperty.__doc__,
+        transformer=ReplaceReferenceProperty,
     ),
 )

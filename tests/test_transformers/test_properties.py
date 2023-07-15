@@ -26,6 +26,7 @@ from db2ndb.transformers import (
     ReplaceTextProperty,
     ReplaceTimeProperty,
     ReplaceUserProperty,
+    ReplaceReferenceProperty,
 )
 
 
@@ -78,6 +79,11 @@ from db2ndb.transformers import (
             "ndb.StringProperty()",
         ),
         ([ReplaceRatingProperty], "db.RatingProperty()", "ndb.IntegerProperty()"),
+        (
+            [ReplaceReferenceProperty],
+            "db.ReferenceProperty(AnotherModel)",
+            "ndb.KeyProperty(kind=AnotherModel)",
+        ),
         ([ReplaceStringProperty], "db.StringProperty()", "ndb.StringProperty()"),
         (
             [ReplaceStringProperty, RemoveMultilineKwarg],

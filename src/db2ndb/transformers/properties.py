@@ -23,6 +23,7 @@ __all__ = (
     "ReplacePhoneNumberProperty",
     "ReplacePostalAddressProperty",
     "ReplaceRatingProperty",
+    "ReplaceReferenceProperty",
     "ReplaceStringProperty",
     "RemoveMultilineKwarg",
     "ReplaceTextProperty",
@@ -62,6 +63,8 @@ ReplaceBlobReferenceProperty = ReplaceProperty(
 
 
 class ReplaceByteStringProperty(ContextAwareTransformer):
+    """Replace `db.ByteStringProperty()` with `ndb.BlobProperty(indexed=True)`"""
+
     @m.leave(
         m.Call(
             func=m.Attribute(
@@ -90,8 +93,55 @@ class ReplaceByteStringProperty(ContextAwareTransformer):
 
 
 class RemoveMultilineKwarg(ContextAwareTransformer):
+    """Remove `multiline` keyword argument from db.StringProperty()"""
+
     @m.leave(m.Arg(keyword=m.Name(value="multiline")))
     def _transform(
         self, original_node: cst.Arg, updated_node: cst.Arg
     ) -> cst.RemovalSentinel:
         return cst.RemoveFromParent()
+
+
+class ReplaceReferenceProperty(ContextAwareTransformer):
+    """Replace db.ReferenceProperty(AnotherModel) with `db.KeyProperty(kind=AnotherModel)`"""
+
+    @m.leave(
+        m.Call(
+            func=m.Attribute(
+                value=m.Name(value="db"), attr=m.Name(value="ReferenceProperty")
+            ),
+            args=[m.AtLeastN(n=1)],
+        )
+    )
+    def _transform(self, original_mode: cst.Call, updated_node: cst.Call) -> cst.Call:
+        updated_args = []
+
+        for i, arg in enumerate(updated_node.args):
+            # Option 1: db.ReferenceProperty(AnotherModel)
+            if i == 0 and arg.keyword is None:
+                updated_args.append(
+                    cst.Arg(
+                        value=arg.value,
+                        keyword=cst.Name(value="kind"),
+                        equal=cst.AssignEqual(
+                            whitespace_after=cst.SimpleWhitespace(value=""),
+                            whitespace_before=cst.SimpleWhitespace(value=""),
+                        ),
+                    )
+                )
+                continue
+
+            # Option 2: db.ReferenceProperty(reference_class=AnotherModel)
+            if arg.keyword == "reference_class":
+                updated_args.append(arg.with_changes(keyword=m.Name(value="kind")))
+                continue
+
+            updated_args.append(arg)
+
+        return updated_node.with_changes(
+            func=cst.Attribute(
+                value=cst.Name(value="ndb"),
+                attr=cst.Name(value="KeyProperty"),
+            ),
+            args=updated_args,
+        )
