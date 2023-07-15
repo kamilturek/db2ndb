@@ -29,6 +29,7 @@ __all__ = (
     "ReplaceSelfReferenceProperty",
     "ReplaceStringProperty",
     "RemoveMultilineKwarg",
+    "ReplaceStringListProperty",
     "ReplaceTextProperty",
     "ReplaceTimeProperty",
     "ReplaceUserProperty",
@@ -71,7 +72,8 @@ class ReplaceByteStringProperty(ContextAwareTransformer):
     @m.leave(
         m.Call(
             func=m.Attribute(
-                value=m.Name(value="db"), attr=m.Name(value="ByteStringProperty")
+                value=m.Name(value="db"),
+                attr=m.Name(value="ByteStringProperty"),
             )
         )
     )
@@ -93,16 +95,6 @@ class ReplaceByteStringProperty(ContextAwareTransformer):
                 ),
             ],
         )
-
-
-class RemoveMultilineKwarg(ContextAwareTransformer):
-    """Remove `multiline` keyword argument from db.StringProperty()"""
-
-    @m.leave(m.Arg(keyword=m.Name(value="multiline")))
-    def _transform(
-        self, original_node: cst.Arg, updated_node: cst.Arg
-    ) -> cst.RemovalSentinel:
-        return cst.RemoveFromParent()
 
 
 class ReplaceReferenceProperty(ContextAwareTransformer):
@@ -183,6 +175,47 @@ class ReplaceSelfReferenceProperty(ContextAwareTransformer):
                 cst.Arg(
                     value=cst.SimpleString(value=f"'{self._latest_class_name.value}'"),
                     keyword=cst.Name(value="kind"),
+                    equal=cst.AssignEqual(
+                        whitespace_after=cst.SimpleWhitespace(value=""),
+                        whitespace_before=cst.SimpleWhitespace(value=""),
+                    ),
+                ),
+            ],
+        )
+
+
+class RemoveMultilineKwarg(ContextAwareTransformer):
+    """Remove `multiline` keyword argument from db.StringProperty()"""
+
+    @m.leave(m.Arg(keyword=m.Name(value="multiline")))
+    def _transform(
+        self, original_node: cst.Arg, updated_node: cst.Arg
+    ) -> cst.RemovalSentinel:
+        return cst.RemoveFromParent()
+
+
+class ReplaceStringListProperty(ContextAwareTransformer):
+    """Replace `db.StringListProperty()` with `ndb.StringProperty(repeated=True)`"""
+
+    @m.leave(
+        m.Call(
+            func=m.Attribute(
+                value=m.Name(value="db"),
+                attr=m.Name(value="StringListProperty"),
+            )
+        )
+    )
+    def _transform(self, original_node: cst.Call, updated_node: cst.Call) -> cst.Call:
+        return updated_node.with_changes(
+            func=cst.Attribute(
+                value=cst.Name(value="ndb"),
+                attr=cst.Name(value="StringProperty"),
+            ),
+            args=[
+                *updated_node.args,
+                cst.Arg(
+                    value=cst.Name(value="True"),
+                    keyword=cst.Name(value="repeated"),
                     equal=cst.AssignEqual(
                         whitespace_after=cst.SimpleWhitespace(value=""),
                         whitespace_before=cst.SimpleWhitespace(value=""),

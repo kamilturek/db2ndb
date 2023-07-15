@@ -30,6 +30,7 @@ from db2ndb.transformers import (
     ReplaceRatingProperty,
     ReplaceReferenceProperty,
     ReplaceSelfReferenceProperty,
+    ReplaceStringListProperty,
     ReplaceStringProperty,
     ReplaceTextProperty,
     ReplaceTimeProperty,
@@ -163,10 +164,10 @@ TRANSFORMATIONS = (
         code="T029",
         transformer=RemoveMultilineKwarg,
     ),
-    # Transformation(
-    #     code="T030",
-    #     transformer=ReplaceStringListProperty,
-    # ),
+    Transformation(
+        code="T030",
+        transformer=ReplaceStringListProperty,
+    ),
     Transformation(
         code="T031",
         transformer=ReplaceTextProperty,

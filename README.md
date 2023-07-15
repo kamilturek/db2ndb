@@ -67,6 +67,7 @@ db2ndb --disable T001 app.py
 - `T027` - Replace `db.SelfReferenceProperty()` with `ndb.KeyProperty(kind='ThisModelClass')`
 - `T028` - Replace `db.StringProperty()` with `ndb.StringProperty()`
 - `T029` - Remove `multiline` keyword argument from db.StringProperty()
+- `T030` - Replace `db.StringListProperty()` with `ndb.StringProperty(repeated=True)`
 - `T031` - Replace `db.TextProperty()` with `ndb.TextProperty()`
 - `T032` - Replace `db.TimeProperty()` with `ndb.TimeProperty()`
 - `T033` - Replace `db.UserProperty()` with `ndb.UserProperty()`
