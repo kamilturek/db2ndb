@@ -38,13 +38,21 @@ db2ndb --disable T001 app.py
 
 ## Supported Transformations
 
+### [Model class](https://cloud.google.com/appengine/docs/legacy/standard/python/ndb/db_to_ndb#model_class)
+
 - `T001` - Replace `db.Model` base class with `ndb.Model`
 - `T002` - Replace `kind` method definition with `_get_kind`
 - `T003` - Replace `kind` method call with `_get_kind`
 - `T004` - Replace `properties` method call with `_properties` attribute
 - `T005` - Replace `dynamic_properties` method call with `_properties` attribute
+
+### [Entities](https://cloud.google.com/appengine/docs/legacy/standard/python/ndb/db_to_ndb#entities)
+
 - `T006` - Replace `key_name` keyword argument with `id`
 - `T007` - Replace `key` method call with `key` attribute
+
+### [Properties](https://cloud.google.com/appengine/docs/legacy/standard/python/ndb/db_to_ndb#properties)
+
 - `T008` - Replace `db.BlobProperty()` with `ndb.BlobProperty()`
 - `T009` - Replace `db.BooleanProperty()` with `ndb.BooleanProperty()`
 - `T010` - Replace `db.ByteStringProperty()` with `ndb.BlobProperty(indexed=True)`
