@@ -9,11 +9,13 @@ from db2ndb.transformers import (
     ReplaceCategoryProperty,
     ReplaceDateProperty,
     ReplaceDateTimeProperty,
+    ReplaceDBGetCall,
     ReplaceDBModelBase,
     ReplaceDynamicPropertiesCall,
     ReplaceEmailProperty,
     ReplaceFloatProperty,
     ReplaceGeoPtProperty,
+    ReplaceGetByKeyNameCall,
     ReplaceIntegerProperty,
     ReplaceKeyCall,
     ReplaceKeyNameKwarg,
@@ -183,5 +185,13 @@ TRANSFORMATIONS = (
     Transformation(
         code="T034",
         transformer=ReplaceBlobReferenceProperty,
+    ),
+    Transformation(
+        code="T035",
+        transformer=ReplaceGetByKeyNameCall,
+    ),
+    Transformation(
+        code="T036",
+        transformer=ReplaceDBGetCall,
     ),
 )
