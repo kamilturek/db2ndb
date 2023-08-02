@@ -185,7 +185,7 @@ class ReplaceSelfReferenceProperty(ContextAwareTransformer):
 
 
 class RemoveMultilineKwarg(ContextAwareTransformer):
-    """Remove `multiline` keyword argument from db.StringProperty()"""
+    """Replace `db.StringProperty(multiline=True)` with `db.StringProperty()`"""
 
     @m.leave(m.Arg(keyword=m.Name(value="multiline")))
     def _transform(
