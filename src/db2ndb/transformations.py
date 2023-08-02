@@ -11,6 +11,7 @@ from db2ndb.transformers import (
     ReplaceDateTimeProperty,
     ReplaceDBGetCall,
     ReplaceDBModelBase,
+    ReplaceDBPutCall,
     ReplaceDynamicPropertiesCall,
     ReplaceEmailProperty,
     ReplaceFloatProperty,
@@ -193,5 +194,9 @@ TRANSFORMATIONS = (
     Transformation(
         code="T036",
         transformer=ReplaceDBGetCall,
+    ),
+    Transformation(
+        code="T037",
+        transformer=ReplaceDBPutCall,
     ),
 )

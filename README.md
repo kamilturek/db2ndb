@@ -87,6 +87,10 @@ db2ndb --disable T001 app.py
 - `T035` - Replace `MyModel.get_by_key_name('my_key')` with `MyModel.get_by_id('my_key')`
 - `T036` - Replace `db.get(key)` call with `key.get()`
 
+### [Put](https://cloud.google.com/appengine/docs/legacy/standard/python/ndb/db_to_ndb#get)
+
+- `T037` - Replace `db.put(model_instance)` with `model_instance.put()`
+
 ## License
 
 This project is licensed under the terms of the [MIT license](./LICENSE).
