@@ -87,6 +87,11 @@ from db2ndb.transformers import (
             "ndb.KeyProperty(kind=AnotherModel)",
         ),
         (
+            [ReplaceReferenceProperty],
+            "db.ReferenceProperty(reference_class=AnotherModel)",
+            "ndb.KeyProperty(kind=AnotherModel)",
+        ),
+        (
             [ReplaceSelfReferenceProperty],
             "class ThisModelClass: db.SelfReferenceProperty()",
             "class ThisModelClass: ndb.KeyProperty(kind='ThisModelClass')",
