@@ -17,7 +17,7 @@ class ReplaceGetByKeyNameCall(ContextAwareTransformer):
 
 
 class ReplaceDBGetCall(ContextAwareTransformer):
-    """Replace `db.get(key)` call with `key.get()`"""
+    """Replace `db.get(key)` with `key.get()`"""
 
     @m.leave(
         m.Call(func=m.Attribute(value=m.Name(value="db"), attr=m.Name(value="get")))

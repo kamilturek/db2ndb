@@ -85,7 +85,7 @@ db2ndb --disable T001 app.py
 ### [Get](https://cloud.google.com/appengine/docs/legacy/standard/python/ndb/db_to_ndb#get)
 
 - `T035` - Replace `MyModel.get_by_key_name('my_key')` with `MyModel.get_by_id('my_key')`
-- `T036` - Replace `db.get(key)` call with `key.get()`
+- `T036` - Replace `db.get(key)` with `key.get()`
 
 ### [Put](https://cloud.google.com/appengine/docs/legacy/standard/python/ndb/db_to_ndb#get)
 
