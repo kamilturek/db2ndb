@@ -27,7 +27,6 @@ class ReplaceDBGetCall(ContextAwareTransformer):
         other_args = []
 
         for i, arg in enumerate(updated_node.args):
-            print(arg)
             if key_arg is None:
                 if (i == 0 and arg.keyword is None) or arg.keyword.value == "keys":
                     key_arg = arg
