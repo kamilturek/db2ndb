@@ -6,7 +6,7 @@ __all__ = ("ReplaceKeyNameKwarg", "ReplaceKeyCall")
 
 
 class ReplaceKeyNameKwarg(ContextAwareTransformer):
-    """Replace `key_name` keyword argument with `id`"""
+    """Replace `MyModel(key_name='my_key')` with `MyModel(id='my_key')`"""
 
     @m.leave(m.Arg(keyword=m.Name(value="key_name")))
     def _transform(self, original_node: cst.Arg, updated_node: cst.Arg) -> cst.Arg:
@@ -14,7 +14,7 @@ class ReplaceKeyNameKwarg(ContextAwareTransformer):
 
 
 class ReplaceKeyCall(ContextAwareTransformer):
-    """Replace `key` method call with `key` attribute"""
+    """Replace `model_instance.key()` with `model_instance.key`"""
 
     @m.leave(m.Call(func=m.Attribute(attr=m.Name(value="key"))))
     def _transform(

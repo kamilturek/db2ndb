@@ -41,16 +41,16 @@ db2ndb --disable T001 app.py
 
 ### [Model class](https://cloud.google.com/appengine/docs/legacy/standard/python/ndb/db_to_ndb#model_class)
 
-- `T001` - Replace `db.Model` base class with `ndb.Model`
-- `T002` - Replace `kind` method definition with `_get_kind`
-- `T003` - Replace `kind` method call with `_get_kind`
-- `T004` - Replace `properties` method call with `_properties` attribute
-- `T005` - Replace `dynamic_properties` method call with `_properties` attribute
+- `T001` - Replace `class MyModel(db.Model)` with `class MyModel(ndb.Model)`
+- `T002` - Replace `def kind(cls):` with `def _get_kind(cls):`
+- `T003` - Replace `MyModel.kind()` with `MyModel._get_kind()`
+- `T004` - Replace `MyModel.properties()` with `MyModel._properties`
+- `T005` - Replace `MyExpando.dynamic_properties()` with `MyExpando._properties`
 
 ### [Entities](https://cloud.google.com/appengine/docs/legacy/standard/python/ndb/db_to_ndb#entities)
 
-- `T006` - Replace `key_name` keyword argument with `id`
-- `T007` - Replace `key` method call with `key` attribute
+- `T006` - Replace `MyModel(key_name='my_key')` with `MyModel(id='my_key')`
+- `T007` - Replace `model_instance.key()` with `model_instance.key`
 
 ### [Properties](https://cloud.google.com/appengine/docs/legacy/standard/python/ndb/db_to_ndb#properties)
 
