@@ -2,7 +2,8 @@
 
 db2ndb tool is a Python CLI tool that helps you with migrating your App Engine
 Python application from `google.appengine.ext.db` to `google.appengine.ext.ndb`
-as per the official [DB to NDB Client Library Migration](https://cloud.google.com/appengine/docs/legacy/standard/python/ndb/db_to_ndb).
+as per the official [DB to NDB Client Library Migration](https://cloud.google.com/appengine/docs/legacy/standard/python/ndb/db_to_ndb)
+guide.
 
 ## Installation
 
@@ -74,12 +75,17 @@ db2ndb --disable T001 app.py
 - `T026` - Replace `db.ReferenceProperty(AnotherModel)` with `db.KeyProperty(kind=AnotherModel)`
 - `T027` - Replace `db.SelfReferenceProperty()` with `ndb.KeyProperty(kind='ThisModelClass')`
 - `T028` - Replace `db.StringProperty()` with `ndb.StringProperty()`
-- `T029` - Remove `multiline` keyword argument from db.StringProperty()
+- `T029` - Replace `db.StringProperty(multiline=True)` with `db.StringProperty()`
 - `T030` - Replace `db.StringListProperty()` with `ndb.StringProperty(repeated=True)`
 - `T031` - Replace `db.TextProperty()` with `ndb.TextProperty()`
 - `T032` - Replace `db.TimeProperty()` with `ndb.TimeProperty()`
 - `T033` - Replace `db.UserProperty()` with `ndb.UserProperty()`
 - `T034` - Replace `blobstore.BlobReferenceProperty()` with `ndb.BlobKeyProperty()`
+
+### [Get](https://cloud.google.com/appengine/docs/legacy/standard/python/ndb/db_to_ndb#get)
+
+- `T035` - Replace `MyModel.get_by_key_name('my_key')` with `MyModel.get_by_id('my_key')`
+- `T036` - Replace `db.get(key)` call with `key.get()`
 
 ## License
 

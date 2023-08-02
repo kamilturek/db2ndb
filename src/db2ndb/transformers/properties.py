@@ -127,8 +127,8 @@ class ReplaceReferenceProperty(ContextAwareTransformer):
                 continue
 
             # Option 2: db.ReferenceProperty(reference_class=AnotherModel)
-            if arg.keyword == "reference_class":
-                updated_args.append(arg.with_changes(keyword=m.Name(value="kind")))
+            if arg.keyword.value == "reference_class":
+                updated_args.append(arg.with_changes(keyword=cst.Name(value="kind")))
                 continue
 
             updated_args.append(arg)
@@ -185,7 +185,7 @@ class ReplaceSelfReferenceProperty(ContextAwareTransformer):
 
 
 class RemoveMultilineKwarg(ContextAwareTransformer):
-    """Remove `multiline` keyword argument from db.StringProperty()"""
+    """Replace `db.StringProperty(multiline=True)` with `db.StringProperty()`"""
 
     @m.leave(m.Arg(keyword=m.Name(value="multiline")))
     def _transform(
