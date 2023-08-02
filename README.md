@@ -86,7 +86,6 @@ db2ndb --disable T001 app.py
 
 - `T035` - Replace `MyModel.get_by_key_name('my_key')` with `MyModel.get_by_id('my_key')`
 - `T036` - Replace `db.get(key)` call with `key.get()`
-
   > [!WARNING]
   > It does not recognize whether multiple keys are passed, e.g.:
   >`db.get([key1, key2])`. `ndb.get_multi` should be then used instead.
